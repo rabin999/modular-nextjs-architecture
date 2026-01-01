@@ -11,7 +11,6 @@ class Logger {
             level,
             message,
             ...context,
-            // In a real app, you might add environment info, version, etc.
         }
     }
 

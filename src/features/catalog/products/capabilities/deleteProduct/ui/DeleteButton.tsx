@@ -36,12 +36,7 @@ export function DeleteButton({ productId }: { productId: number }) {
 
     return (
         <>
-            <Button
-                variant="danger"
-                size="sm"
-                onClick={() => setShowConfirm(true)}
-                disabled={isPending}
-            >
+            <Button variant="danger" size="sm" onClick={() => setShowConfirm(true)} disabled={isPending}>
                 {t('delete_btn')}
             </Button>
 

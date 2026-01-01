@@ -12,5 +12,5 @@ export const productDetailManifest: FeatureManifest = {
     messages: {
         en: () => import('./i18n/en.json'),
         ar: () => import('./i18n/ar.json'),
-    }
+    },
 }

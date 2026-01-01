@@ -12,9 +12,7 @@ export async function GET(request: NextRequest) {
     const rawCategory = searchParams.get('category')
     const category = rawCategory ? sanitizeString(rawCategory) : undefined
 
-    const url = category
-        ? `${ENDPOINTS.FAKESTORE_BASE}/products/category/${category}`
-        : `${ENDPOINTS.FAKESTORE_BASE}/products`
+    const url = category ? `${ENDPOINTS.FAKESTORE_BASE}/products/category/${category}` : `${ENDPOINTS.FAKESTORE_BASE}/products`
 
     // Server-side call to upstream
     const result = await apiClient(url)

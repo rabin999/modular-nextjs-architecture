@@ -7,13 +7,7 @@ import '../globals.css'
 import { Footer } from '@/shared/ui/Footer'
 import { ToastProvider } from '@/shared/ui/Toast'
 
-export default async function LocaleLayout({
-    children,
-    params
-}: {
-    children: React.ReactNode
-    params: Promise<{ locale: string }>
-}) {
+export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
     const { locale: rawLocale } = await params
     const locale = rawLocale as Locale
 
@@ -39,15 +33,19 @@ export default async function LocaleLayout({
                             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
                                 <div className="font-bold text-xl">EnterpriseDemo</div>
                                 <nav className="flex gap-4">
-                                    <a href={`/${locale}`} className="hover:underline">{t('home')}</a>
-                                    <a href={`/${locale}/products`} className="hover:underline">{t('products')}</a>
-                                    <a href={`/${locale}/login`} className="hover:underline font-medium text-blue-600">{t('login')}</a>
+                                    <a href={`/${locale}`} className="hover:underline">
+                                        {t('home')}
+                                    </a>
+                                    <a href={`/${locale}/products`} className="hover:underline">
+                                        {t('products')}
+                                    </a>
+                                    <a href={`/${locale}/login`} className="hover:underline font-medium text-blue-600">
+                                        {t('login')}
+                                    </a>
                                 </nav>
                             </div>
                         </header>
-                        <main className="flex-1">
-                            {children}
-                        </main>
+                        <main className="flex-1">{children}</main>
                         <Footer />
                     </ToastProvider>
                 </NextIntlClientProvider>

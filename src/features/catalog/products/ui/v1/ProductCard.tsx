@@ -17,11 +17,7 @@ export function ProductCard({ product, rowActions }: ProductCardProps) {
         <Card className="h-full flex flex-col hover:shadow-lg transition-shadow">
             <Link href={`/products/${product.id}`} className="flex-1 flex flex-col">
                 <div className="h-48 p-4 flex items-center justify-center bg-white rounded-t-lg">
-                    <img
-                        src={product.image}
-                        alt={product.title}
-                        className="h-full w-auto object-contain"
-                    />
+                    <img src={product.image} alt={product.title} className="h-full w-auto object-contain" />
                 </div>
                 <CardHeader>
                     <CardTitle className="text-lg line-clamp-1" title={product.title}>
@@ -33,9 +29,7 @@ export function ProductCard({ product, rowActions }: ProductCardProps) {
                     <div className="mt-4 font-bold text-lg">{formatMoney(product.price)}</div>
                 </CardContent>
             </Link>
-            <div className="p-4 border-t border-slate-100 flex justify-end gap-2">
-                {rowActions}
-            </div>
+            <div className="p-4 border-t border-slate-100 flex justify-end gap-2">{rowActions}</div>
         </Card>
     )
 }

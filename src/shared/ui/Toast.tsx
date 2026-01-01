@@ -34,10 +34,15 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             <div className="fixed bottom-4 right-4 z-[100] flex flex-col gap-2 pointer-events-none">
                 {toasts.map(toast => (
                     <div key={toast.id} className="pointer-events-auto animate-in slide-in-from-right fade-in duration-300">
-                        <Card className={`p-4 shadow-lg min-w-[300px] border-l-4 ${toast.type === 'success' ? 'border-l-green-500 bg-green-50' :
-                                toast.type === 'error' ? 'border-l-red-500 bg-red-50' :
-                                    'border-l-blue-500 bg-blue-50'
-                            }`}>
+                        <Card
+                            className={`p-4 shadow-lg min-w-[300px] border-l-4 ${
+                                toast.type === 'success'
+                                    ? 'border-l-green-500 bg-green-50'
+                                    : toast.type === 'error'
+                                      ? 'border-l-red-500 bg-red-50'
+                                      : 'border-l-blue-500 bg-blue-50'
+                            }`}
+                        >
                             <p className="text-sm font-medium text-slate-900">{toast.message}</p>
                         </Card>
                     </div>

@@ -1,7 +1,7 @@
 import { REGISTRY } from '@/features/registry'
 
 export default async function Page({
-    searchParams
+    searchParams,
 }: {
     searchParams: Promise<{ category?: string }>
     params: Promise<{ locale: string }>
@@ -11,12 +11,10 @@ export default async function Page({
     const cardVersion = REGISTRY.config.ui.productCard as 'v1' | 'v2'
 
     // Resolve capabilities asynchronously
-    const capabilityLoaders = Object.values(REGISTRY.capabilities).map(loader => loader ? loader() : null)
+    const capabilityLoaders = Object.values(REGISTRY.capabilities).map(loader => (loader ? loader() : null))
     const capabilityManifests = (await Promise.all(capabilityLoaders)).filter(Boolean)
 
-    const capabilities = capabilityManifests
-        .filter(cap => cap && cap.enabled)
-        .map((cap) => ({ slot: cap!.slot, component: cap!.component }))
+    const capabilities = capabilityManifests.filter(cap => cap && cap.enabled).map(cap => ({ slot: cap!.slot, component: cap!.component }))
 
     const loadFeature = REGISTRY.features['catalog-products']
     const featureManifest = loadFeature ? await loadFeature() : null
@@ -24,9 +22,5 @@ export default async function Page({
 
     if (!FeaturePage) return null
 
-    return <FeaturePage
-        searchParams={searchParams}
-        cardVersion={cardVersion}
-        capabilities={capabilities}
-    />
+    return <FeaturePage searchParams={searchParams} cardVersion={cardVersion} capabilities={capabilities} />
 }

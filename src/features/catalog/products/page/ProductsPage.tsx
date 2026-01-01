@@ -12,9 +12,7 @@ import { ProductCard as ProductCardV2 } from '../ui/v2/ProductCard'
 
 // Server-side data fetching
 async function getProducts(category?: string) {
-    const url = category
-        ? `${ENDPOINTS.FAKESTORE_BASE}/products/category/${category}`
-        : `${ENDPOINTS.FAKESTORE_BASE}/products`
+    const url = category ? `${ENDPOINTS.FAKESTORE_BASE}/products/category/${category}` : `${ENDPOINTS.FAKESTORE_BASE}/products`
 
     // Using core client (server-side call to external API)
     const res = await apiClient<any[]>(url)
@@ -52,9 +50,7 @@ export async function ProductsPage({ searchParams, cardVersion = 'v1', capabilit
     const categories = await getCategories()
 
     // 1. Resolve Product Card Version
-    const CardComponent = cardVersion === 'v2'
-        ? ProductCardV2
-        : ProductCardV1
+    const CardComponent = cardVersion === 'v2' ? ProductCardV2 : ProductCardV1
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -64,11 +60,7 @@ export async function ProductsPage({ searchParams, cardVersion = 'v1', capabilit
                     <FilterBar categories={categories} />
                 </div>
 
-                <ProductGrid
-                    products={products}
-                    CardComponent={CardComponent}
-                    actionsRegistry={capabilities}
-                />
+                <ProductGrid products={products} CardComponent={CardComponent} actionsRegistry={capabilities} />
             </div>
         </div>
     )

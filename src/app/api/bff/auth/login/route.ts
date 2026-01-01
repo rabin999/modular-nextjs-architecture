@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     const res = await fetch(`${ENDPOINTS.FAKESTORE_BASE}/auth/login`, {
         method: 'POST',
         body: JSON.stringify(body),
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
     })
 
     if (!res.ok) {
@@ -28,8 +28,8 @@ export async function POST(request: Request) {
             token: data.token,
             user: {
                 id: 1,
-                username: body.username || 'user'
-            }
-        }
+                username: body.username || 'user',
+            },
+        },
     })
 }

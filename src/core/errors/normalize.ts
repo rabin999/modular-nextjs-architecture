@@ -27,7 +27,7 @@ export async function handleApiError(response: Response) {
         if (response.status === 401) code = 'UNAUTHORIZED'
         if (response.status === 400) code = 'VALIDATION_ERROR'
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+         
         throw new AppError(code as ErrorCode, response.statusText, response.status)
     }
 }

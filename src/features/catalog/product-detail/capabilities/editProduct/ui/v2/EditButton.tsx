@@ -13,7 +13,7 @@ export function EditButton({ productId }: { productId: number | string }) {
         // V2 might use a different endpoint or optimistic UI
         const res = await apiClient(`${ENDPOINTS.BFF_BASE}/products/${productId}`, {
             method: 'PUT',
-            body: JSON.stringify({ title: 'Updated Title (V2)' })
+            body: JSON.stringify({ title: 'Updated Title (V2)' }),
         })
 
         if (res.ok) {

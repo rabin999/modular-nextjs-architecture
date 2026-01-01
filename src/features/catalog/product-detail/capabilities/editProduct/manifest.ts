@@ -13,7 +13,7 @@ export const editProductCapabilityV1: CapabilityManifest = {
     messages: {
         en: () => import('./i18n/en.json'),
         ar: () => import('./i18n/ar.json'),
-    }
+    },
 }
 
 export const editProductCapabilityV2: CapabilityManifest = {
@@ -22,5 +22,5 @@ export const editProductCapabilityV2: CapabilityManifest = {
     component: EditButtonV2,
     messages: {
         en: () => import('./i18n/v2/en.json'),
-    }
+    },
 }

@@ -1,10 +1,4 @@
-export type ErrorCode =
-    | 'UNKNOWN'
-    | 'NETWORK_ERROR'
-    | 'NOT_FOUND'
-    | 'UNAUTHORIZED'
-    | 'VALIDATION_ERROR'
-    | 'INTERNAL_ERROR'
+export type ErrorCode = 'UNKNOWN' | 'NETWORK_ERROR' | 'NOT_FOUND' | 'UNAUTHORIZED' | 'VALIDATION_ERROR' | 'INTERNAL_ERROR'
 
 export interface StandardAppError {
     code: ErrorCode

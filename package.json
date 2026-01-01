@@ -24,25 +24,18 @@
     "build": "next build",
     "analyze": "cross-env ANALYZE=true next build --webpack",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" \"scripts/**/*.ts\" --max-warnings=0",
+    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" \"scripts/**/*.ts\" --fix",
     "check:inventory": "tsx scripts/inventory.ts",
     "check:orphan": "tsx scripts/check-orphans.ts",
     "check:unused": "knip",
     "generate": "tsx scripts/generate-feature.ts",
+    "remove": "tsx scripts/remove-feature.ts",
     "type-check": "tsc --noEmit",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    "prepare": "husky"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,md}": [
-      "prettier --write"
-    ]
+    "format": "prettier --write \"src/**/*.{ts,tsx,json}\" \"scripts/**/*.ts\""
   },
   "dependencies": {
     "@inquirer/prompts": "^8.1.0",
@@ -76,17 +69,22 @@
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.1.1",
     "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-unused-imports": "^4.3.0",
     "fs-extra": "^11.3.3",
-    "husky": "^9.1.7",
     "inquirer": "^13.1.0",
     "jsdom": "^27.4.0",
     "knip": "^5.78.0",
     "lint-staged": "^16.2.7",
     "msw": "^2.12.7",
     "postcss": "^8.4.49",
+    "prettier": "^3.7.4",
     "tailwindcss": "^4.1.18",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.16"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   }
 }

@@ -1,6 +1,5 @@
 'use client'
 
-import { ReactNode } from 'react'
 import { Button } from './Button'
 import { Card, CardHeader, CardTitle, CardContent } from './Card'
 
@@ -25,7 +24,7 @@ export function ConfirmDialog({
     variant = 'primary',
     onConfirm,
     onCancel,
-    isLoading
+    isLoading,
 }: ConfirmDialogProps) {
     if (!open) return null
 
@@ -41,11 +40,7 @@ export function ConfirmDialog({
                         <Button variant="outline" onClick={onCancel} disabled={isLoading}>
                             {cancelText}
                         </Button>
-                        <Button
-                            variant={variant === 'danger' ? 'danger' : 'primary'}
-                            onClick={onConfirm}
-                            disabled={isLoading}
-                        >
+                        <Button variant={variant === 'danger' ? 'danger' : 'primary'} onClick={onConfirm} disabled={isLoading}>
                             {isLoading ? '...' : confirmText}
                         </Button>
                     </div>

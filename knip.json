@@ -1,19 +1,6 @@
 {
     "$schema": "https://unpkg.com/knip@5/schema.json",
-    "entry": [
-        "src/core/i18n/request.ts",
-        "src/core/i18n/routing.ts",
-        "src/features/**/index.ts",
-        "scripts/*.ts"
-    ],
-    "ignore": [
-        ".next/**",
-        "postcss.config.js",
-        "tailwind.config.ts"
-    ],
-    "ignoreDependencies": [
-        "lucide-react",
-        "eslint",
-        "eslint-config-next"
-    ]
+    "entry": ["src/core/i18n/request.ts", "src/core/i18n/routing.ts", "src/features/**/index.ts", "scripts/*.ts"],
+    "ignore": [".next/**", "postcss.config.js", "tailwind.config.ts"],
+    "ignoreDependencies": ["lucide-react", "eslint", "eslint-config-next"]
 }

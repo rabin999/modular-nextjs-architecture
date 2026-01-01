@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/shared/ui/Card'
 import { useState } from 'react'
 import { apiClient } from '@/core/api/client'
 import { ENDPOINTS } from '@/core/api/endpoints'
-import { loginResponseSchema, LoginResponse } from '../contract'
+import { LoginResponse, loginResponseSchema } from '@/features/auth/login/contracts/login-response.schema'
 
 export function LoginPage() {
     const t = useTranslations('Auth.Login')
@@ -25,7 +25,7 @@ export function LoginPage() {
         const res = await apiClient<LoginResponse>(`${ENDPOINTS.BFF_BASE}/auth/login`, {
             method: 'POST',
             body: JSON.stringify({ username, password }),
-            schema: loginResponseSchema
+            schema: loginResponseSchema,
         })
 
         if (res.ok) {

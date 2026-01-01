@@ -9,7 +9,7 @@ export const loginResponseSchema = z.object({
         firstname: z.string().optional(),
         lastname: z.string().optional(),
         phone: z.string().optional(),
-    })
+    }),
 })
 
 export type LoginResponse = z.infer<typeof loginResponseSchema>

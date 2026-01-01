@@ -1,5 +1,4 @@
-
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 import createMiddleware from 'next-intl/middleware'
 import { routing } from './core/i18n/routing'
 
@@ -38,7 +37,7 @@ export default function middleware(request: NextRequest) {
         ? process.env.NEXT_PUBLIC_ALLOWED_IMAGE_DOMAINS.split(',').map(d => d.trim())
         : ['https://fakestoreapi.com', 'https://i.pravatar.cc']
 
-    const imgSrc = ['\'self\'', 'blob:', 'data:', ...allowedImageDomains].join(' ')
+    const imgSrc = ["'self'", 'blob:', 'data:', ...allowedImageDomains].join(' ')
 
     const csp = `
         default-src 'self';
@@ -52,7 +51,9 @@ export default function middleware(request: NextRequest) {
         frame-ancestors 'none';
         block-all-mixed-content;
         upgrade-insecure-requests;
-    `.replace(/\s{2,}/g, ' ').trim()
+    `
+        .replace(/\s{2,}/g, ' ')
+        .trim()
 
     headers.set('Content-Security-Policy', csp)
 
@@ -64,7 +65,9 @@ export default function middleware(request: NextRequest) {
         geolocation=(), 
         browsing-topics=(),
         payment=()
-    `.replace(/\s{2,}/g, ' ').trim()
+    `
+        .replace(/\s{2,}/g, ' ')
+        .trim()
     headers.set('Permissions-Policy', permissions)
 
     return response
@@ -72,5 +75,5 @@ export default function middleware(request: NextRequest) {
 
 export const config = {
     // Match only internationalized pathnames
-    matcher: ['/', '/(ar|en)/:path*']
+    matcher: ['/', '/(ar|en)/:path*'],
 }

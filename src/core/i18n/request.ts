@@ -1,6 +1,5 @@
 import { getRequestConfig } from 'next-intl/server'
 import { routing } from './routing'
-import { notFound } from 'next/navigation'
 import { REGISTRY } from '@/features/registry'
 
 export default getRequestConfig(async ({ requestLocale }) => {
@@ -37,6 +36,6 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
     return {
         locale,
-        messages
+        messages,
     }
 })

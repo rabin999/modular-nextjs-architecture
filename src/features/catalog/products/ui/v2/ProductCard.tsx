@@ -16,11 +16,7 @@ export function ProductCard({ product, rowActions }: ProductCardProps) {
     return (
         <Card className="flex flex-row h-48 hover:shadow-md transition-shadow">
             <Link href={`/products/${product.id}`} className="w-48 p-4 flex items-center justify-center bg-white rounded-l-lg shrink-0">
-                <img
-                    src={product.image}
-                    alt={product.title}
-                    className="h-full w-auto object-contain"
-                />
+                <img src={product.image} alt={product.title} className="h-full w-auto object-contain" />
             </Link>
             <div className="flex-1 flex flex-col">
                 <Link href={`/products/${product.id}`}>
@@ -29,21 +25,15 @@ export function ProductCard({ product, rowActions }: ProductCardProps) {
                             <CardTitle className="text-lg line-clamp-2" title={product.title}>
                                 {product.title}
                             </CardTitle>
-                            <span className="font-bold text-lg whitespace-nowrap">
-                                {formatMoney(product.price)}
-                            </span>
+                            <span className="font-bold text-lg whitespace-nowrap">{formatMoney(product.price)}</span>
                         </div>
-                        <div className="text-xs text-blue-600 font-medium uppercase tracking-wider mt-1">
-                            {product.category}
-                        </div>
+                        <div className="text-xs text-blue-600 font-medium uppercase tracking-wider mt-1">{product.category}</div>
                     </CardHeader>
                     <CardContent className="flex-1">
                         <p className="text-sm text-gray-500 line-clamp-2">{product.description}</p>
                     </CardContent>
                 </Link>
-                <div className="p-4 pt-0 flex justify-end gap-2">
-                    {rowActions}
-                </div>
+                <div className="p-4 pt-0 flex justify-end gap-2">{rowActions}</div>
             </div>
         </Card>
     )

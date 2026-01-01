@@ -11,11 +11,11 @@ export const deleteProductCapability: CapabilityManifest = {
     messages: {
         en: () => import('./i18n/en.json'),
         ar: () => import('./i18n/ar.json'),
-    }
+    },
 }
 
 export const deleteProductDetailCapability: CapabilityManifest = {
     ...deleteProductCapability,
     id: 'delete-product-detail',
-    slot: 'detailActions'
+    slot: 'detailActions',
 }

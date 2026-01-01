@@ -9,22 +9,24 @@ interface RequestOptions<TResponse> extends RequestInit {
     schema?: ZodType<TResponse>
 }
 
+/**
+ * Standardized API client with logging, error handling, and optional Zod validation
+ */
 export async function apiClient<T>(
     url: string,
     options: RequestOptions<T> = {}
 ): Promise<{ ok: true; data: T } | { ok: false; error: AppError }> {
-    const requestId = crypto.randomUUID() // Generate internal ID for tracing this call
+    const requestId = crypto.randomUUID()
     const context = { requestId, method: options.method || 'GET', url }
 
     try {
         const headers = await getStandardHeaders()
 
-        // Override/Merge headers
         const config: RequestInit = {
             ...options,
             headers: {
                 ...headers,
-                'x-request-id': requestId, // Ensure downstream sees this ID
+                'x-request-id': requestId,
                 ...options.headers,
             },
         }
@@ -35,14 +37,13 @@ export async function apiClient<T>(
 
         logger.info('API Response Received', {
             ...context,
-            status: response.status
+            status: response.status,
         })
 
         await handleApiError(response)
 
         const rawData = await response.json()
 
-        // Data Contract Validation
         let data: T = rawData
         if (options.schema) {
             try {
@@ -53,9 +54,8 @@ export async function apiClient<T>(
                     logger.error('Data Contract Violation', {
                         ...context,
                         errors: zodError.issues,
-                        rawData
+                        rawData,
                     })
-                    // We treat contract violations as system errors
                     throw new Error(`Data Contract Violation: ${zodError.message}`)
                 }
                 throw validationError
@@ -63,14 +63,13 @@ export async function apiClient<T>(
         }
 
         return { ok: true, data }
-
     } catch (error) {
         logger.error('API Request Failed', { ...context, error })
 
         const normalized = normalizeError(error)
         return {
             ok: false,
-            error: new AppError(normalized.code, normalized.message, normalized.status, normalized.originalError)
+            error: new AppError(normalized.code, normalized.message, normalized.status, normalized.originalError),
         }
     }
 }

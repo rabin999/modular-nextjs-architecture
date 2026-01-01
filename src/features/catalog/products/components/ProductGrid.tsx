@@ -5,15 +5,15 @@ import { Product } from '../../types'
 export function ProductGrid({
     products,
     CardComponent,
-    actionsRegistry
+    actionsRegistry,
 }: {
-    products: Product[],
-    CardComponent: ComponentType<{ product: Product, actions?: any }>,
-    actionsRegistry: Array<{ slot: string, component: ComponentType<any> }>
+    products: Product[]
+    CardComponent: ComponentType<{ product: Product; actions?: any }>
+    actionsRegistry: Array<{ slot: string; component: ComponentType<any> }>
 }) {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {products.map((product) => {
+            {products.map(product => {
                 // Resolve only the actions for 'rowActions' slot
                 const rowActions = actionsRegistry
                     .filter(cap => cap.slot === 'rowActions')
@@ -24,10 +24,7 @@ export function ProductGrid({
 
                 return (
                     <div key={product.id} className="h-full">
-                        <CardComponent
-                            product={product}
-                            actions={rowActions}
-                        />
+                        <CardComponent product={product} actions={rowActions} />
                     </div>
                 )
             })}

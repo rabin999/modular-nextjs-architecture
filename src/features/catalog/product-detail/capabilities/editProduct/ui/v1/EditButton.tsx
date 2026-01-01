@@ -12,7 +12,7 @@ export function EditButton({ productId }: { productId: number | string }) {
         // For verify "proper api calls", we trigger a mock update
         const res = await apiClient(`${ENDPOINTS.BFF_BASE}/products/${productId}`, {
             method: 'PUT',
-            body: JSON.stringify({ title: 'Updated Title (Mock)' })
+            body: JSON.stringify({ title: 'Updated Title (Mock)' }),
         })
 
         if (res.ok) {

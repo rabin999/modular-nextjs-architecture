@@ -44,7 +44,7 @@ export function FilterBar({ categories }: FilterBarProps) {
                     disabled={isPending}
                 >
                     <option value="">{t('all')}</option>
-                    {categories.map((cat) => (
+                    {categories.map(cat => (
                         <option key={cat} value={cat} className="capitalize">
                             {cat}
                         </option>

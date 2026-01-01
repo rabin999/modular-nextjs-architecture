@@ -1,5 +1,4 @@
 /**
- * Orphan Detection Script
  * Scans for manifest.ts files that are not registered in the registry
  */
 
@@ -46,16 +45,13 @@ function main() {
 
     allManifests.forEach(manifestPath => {
         const relativePath = path.relative(featuresDir, manifestPath)
-        // Convert to import path format: catalog/products/manifest.ts -> ./catalog/products/manifest
         const importPath = './' + relativePath.replace(/\\/g, '/').replace('.ts', '')
-
-        // Also check folder name (for lazy imports like 'catalog-products')
         const normalized = relativePath.replace(/\\/g, '/').replace('/manifest.ts', '')
         const parts = normalized.split('/')
         const folderName = parts[parts.length - 1]
 
-        // Check both import path and folder name
-        const isRegistered = registryContent.includes(importPath) ||
+        const isRegistered =
+            registryContent.includes(importPath) ||
             registryContent.includes(`'${folderName}'`) ||
             registryContent.includes(`"${folderName}"`) ||
             registryContent.includes(folderName + 'Manifest') ||

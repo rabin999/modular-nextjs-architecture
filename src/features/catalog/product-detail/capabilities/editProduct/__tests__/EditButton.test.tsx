@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event'
 vi.mock('next-intl', () => ({
     useTranslations: () => (key: string) => {
         const translations: Record<string, string> = {
-            'action_label': 'Edit',
+            action_label: 'Edit',
         }
         return translations[key] || key
     },
@@ -71,7 +71,7 @@ describe('EditButton V1', () => {
     })
 
     it('should show success alert on successful update', async () => {
-        const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => { })
+        const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {})
         const user = userEvent.setup()
 
         render(<EditButton productId={1} />)
@@ -87,7 +87,7 @@ describe('EditButton V1', () => {
 
     it('should show error alert on failed update', async () => {
         mockApiClient.mockResolvedValue({ ok: false, error: { message: 'Failed' } })
-        const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => { })
+        const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {})
         const user = userEvent.setup()
 
         render(<EditButton productId={1} />)

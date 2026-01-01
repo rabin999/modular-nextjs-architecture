@@ -6,11 +6,11 @@ import userEvent from '@testing-library/user-event'
 vi.mock('next-intl', () => ({
     useTranslations: () => (key: string) => {
         const translations: Record<string, string> = {
-            'title': 'Sign In',
-            'username': 'Username',
-            'password': 'Password',
-            'submit': 'Login',
-            'error': 'Login failed. Please try again.',
+            title: 'Sign In',
+            username: 'Username',
+            password: 'Password',
+            submit: 'Login',
+            error: 'Login failed. Please try again.',
         }
         return translations[key] || key
     },
@@ -105,7 +105,7 @@ describe('LoginPage', () => {
         const user = userEvent.setup()
 
         // Make API call hang
-        mockApiClient.mockImplementation(() => new Promise(() => { }))
+        mockApiClient.mockImplementation(() => new Promise(() => {}))
 
         render(<LoginPage />)
 
@@ -131,7 +131,7 @@ describe('LoginPage', () => {
     })
 
     it('should show success alert on successful login', async () => {
-        const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => { })
+        const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {})
         const user = userEvent.setup()
 
         render(<LoginPage />)

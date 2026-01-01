@@ -1,10 +1,6 @@
 import { REGISTRY } from '@/features/registry'
 
-export default async function HomePage({
-    searchParams
-}: {
-    searchParams: Promise<{ category?: string }>
-}) {
+export default async function HomePage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
     // Lazy-load manifests
     const marketingLoader = REGISTRY.features['marketing-home']
     const catalogLoader = REGISTRY.features['catalog-products']
@@ -23,11 +19,7 @@ export default async function HomePage({
         <main>
             <Hero />
             <div className="container mx-auto px-4 py-12">
-                {ProductsList ? (
-                    <ProductsList searchParams={searchParams} />
-                ) : (
-                    <p className="text-center">Catalog feature is disabled.</p>
-                )}
+                {ProductsList ? <ProductsList searchParams={searchParams} /> : <p className="text-center">Catalog feature is disabled.</p>}
             </div>
         </main>
     )

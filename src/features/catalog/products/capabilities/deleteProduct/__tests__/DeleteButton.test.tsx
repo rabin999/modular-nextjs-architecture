@@ -6,11 +6,11 @@ import userEvent from '@testing-library/user-event'
 vi.mock('next-intl', () => ({
     useTranslations: () => (key: string) => {
         const translations: Record<string, string> = {
-            'delete_btn': 'Delete',
-            'confirm_title': 'Confirm Delete',
-            'confirm_desc': 'Are you sure you want to delete this product?',
-            'canceling': 'Cancel',
-            'error': 'An error occurred',
+            delete_btn: 'Delete',
+            confirm_title: 'Confirm Delete',
+            confirm_desc: 'Are you sure you want to delete this product?',
+            canceling: 'Cancel',
+            error: 'An error occurred',
         }
         return translations[key] || key
     },
@@ -35,15 +35,14 @@ vi.mock('@/shared/ui/Button', () => ({
 
 // Mock the ConfirmDialog component
 vi.mock('@/shared/ui/ConfirmDialog', () => ({
-    ConfirmDialog: ({ open, title, onConfirm, onCancel, confirmText }: any) => (
+    ConfirmDialog: ({ open, title, onConfirm, onCancel, confirmText }: any) =>
         open ? (
             <div data-testid="confirm-dialog">
                 <p>{title}</p>
                 <button onClick={onConfirm}>{confirmText}</button>
                 <button onClick={onCancel}>Cancel</button>
             </div>
-        ) : null
-    ),
+        ) : null,
 }))
 
 // Mock the Toast hook
