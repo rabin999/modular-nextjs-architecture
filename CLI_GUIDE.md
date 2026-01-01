@@ -40,32 +40,20 @@ This creates `template/` directory with:
 - Template `package.json` with `PLACEHOLDER_*` variables
 - Template `README.md` with placeholders
 
-### 2. Clean Template (Manual)
+### 2. Clean Template
 
-After running `prepare:template`, clean the `template/` directory:
+After running `prepare:template`, clean the `template/` directory by removing business-specific code. Then use the built-in generator to create example features:
 
-**Remove business-specific code:**
-- `template/src/features/catalog/` (products, product-detail)
-- `template/src/features/auth/` (login)
-- `template/src/features/marketing/` (home)
-- `template/src/app/[locale]/login/`
-- `template/src/app/[locale]/products/`
-- `template/src/app/api/bff/auth/`
-- `template/src/app/api/bff/products/`
-- `template/src/app/api/bff/categories/`
-- `template/coverage/` (if exists)
+```bash
+# Navigate to template directory
+cd template
 
-**Create example feature:**
-- `template/src/features/example/welcome/` with:
-  - Basic page component
-  - Manifest
-  - i18n files
-  - Simple capability example
+# Remove business-specific features/routes manually or use the remove command
+# Then generate example features using the generator
+npm run generate
+```
 
-**Update:**
-- `template/src/features/registry.ts` - Only include example feature
-- `template/src/app/[locale]/page.tsx` - Use example feature
-- `template/README.md` - Boilerplate-focused documentation
+The generator (`npm run generate`) will help you create new features and capabilities following the architecture patterns.
 
 ### 3. Test Locally
 
@@ -80,9 +68,16 @@ npm link
 # Test from anywhere
 cd ~/Desktop
 npx enterprise-react-boilerplate test-app
+```
 
-# Unlink when done (optional)
+**To unlink when done:**
+
+```bash
+# Unlink globally
 npm unlink -g enterprise-react-boilerplate
+
+# Or from project directory
+npm unlink
 ```
 
 #### Option B: Direct Execution
