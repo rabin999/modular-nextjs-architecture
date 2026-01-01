@@ -1,9 +1,20 @@
 {
-  "name": "enterprise-react-architecture",
+  "name": "enterprise-react-boilerplate",
   "version": "1.0.0",
-  "description": "Production-grade Next.js architecture with lazy-loaded registry, security hardening, and feature isolation",
+  "description": "CLI tool to generate production-grade Next.js applications with enterprise architecture",
   "author": "Rabin Bhandari",
   "license": "MIT",
+  "type": "module",
+  "bin": {
+    "enterprise-react-boilerplate": "./bin/cli.js",
+    "create-enterprise-react": "./bin/cli.js"
+  },
+  "files": [
+    "bin",
+    "template",
+    "README.md",
+    "LICENSE"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/rabinbhandari/enterprise-react-architecture"
@@ -16,16 +27,19 @@
     "enterprise",
     "boilerplate",
     "scalable",
-    "security"
+    "security",
+    "cli",
+    "generator"
   ],
   "private": false,
   "scripts": {
+    "prepare:template": "tsx scripts/prepare-template.ts",
     "dev": "next dev",
     "build": "next build",
     "analyze": "cross-env ANALYZE=true next build --webpack",
     "start": "next start",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" \"scripts/**/*.ts\" --max-warnings=0",
-    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" \"scripts/**/*.ts\" --fix",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" \"scripts/**/*.ts\" \"bin/**/*.js\" --max-warnings=0",
+    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" \"scripts/**/*.ts\" \"bin/**/*.js\" --fix",
     "check:inventory": "tsx scripts/inventory.ts",
     "check:orphan": "tsx scripts/check-orphans.ts",
     "check:unused": "knip",
@@ -35,7 +49,7 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    "format": "prettier --write \"src/**/*.{ts,tsx,json}\" \"scripts/**/*.ts\""
+    "format": "prettier --write \"src/**/*.{ts,tsx,json}\" \"scripts/**/*.ts\" \"bin/**/*.js\""
   },
   "dependencies": {
     "@inquirer/prompts": "^8.1.0",
@@ -62,6 +76,8 @@
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
     "@vitejs/plugin-react": "^5.1.2",
+    "@vitest/coverage-v8": "^4.0.16",
+    "@vitest/ui": "^4.0.16",
     "autoprefixer": "^10.4.20",
     "chalk": "^5.6.2",
     "commander": "^14.0.2",
