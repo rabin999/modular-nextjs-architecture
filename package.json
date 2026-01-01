@@ -1,0 +1,92 @@
+{
+  "name": "enterprise-react-architecture",
+  "version": "1.0.0",
+  "description": "Production-grade Next.js architecture with lazy-loaded registry, security hardening, and feature isolation",
+  "author": "Rabin Bhandari",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rabinbhandari/enterprise-react-architecture"
+  },
+  "keywords": [
+    "nextjs",
+    "react",
+    "typescript",
+    "architecture",
+    "enterprise",
+    "boilerplate",
+    "scalable",
+    "security"
+  ],
+  "private": false,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "analyze": "cross-env ANALYZE=true next build --webpack",
+    "start": "next start",
+    "lint": "next lint",
+    "check:inventory": "tsx scripts/inventory.ts",
+    "check:orphan": "tsx scripts/check-orphans.ts",
+    "check:unused": "knip",
+    "generate": "tsx scripts/generate-feature.ts",
+    "type-check": "tsc --noEmit",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^8.1.0",
+    "clsx": "^2.1.1",
+    "glob": "^13.0.0",
+    "isomorphic-dompurify": "^2.35.0",
+    "lucide-react": "^0.562.0",
+    "next": "^16.1.1",
+    "next-intl": "^4.7.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "tailwind-merge": "^3.4.0",
+    "zod": "^4.3.4"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^16.1.1",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.1",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/fs-extra": "^11.0.4",
+    "@types/inquirer": "^9.0.9",
+    "@types/node": "^22.19.3",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^5.1.2",
+    "autoprefixer": "^10.4.20",
+    "chalk": "^5.6.2",
+    "commander": "^14.0.2",
+    "cross-env": "^10.1.0",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.1.1",
+    "eslint-plugin-import": "^2.32.0",
+    "fs-extra": "^11.3.3",
+    "husky": "^9.1.7",
+    "inquirer": "^13.1.0",
+    "jsdom": "^27.4.0",
+    "knip": "^5.78.0",
+    "lint-staged": "^16.2.7",
+    "msw": "^2.12.7",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^4.1.18",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.16"
+  }
+}

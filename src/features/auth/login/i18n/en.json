@@ -1,0 +1,11 @@
+{
+    "Auth": {
+        "Login": {
+            "title": "Login",
+            "username": "Username",
+            "password": "Password",
+            "submit": "Sign In",
+            "error": "Invalid credentials"
+        }
+    }
+}

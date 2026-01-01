@@ -1,0 +1,15 @@
+{
+    "Common": {
+        "loading": "Loading...",
+        "error": "Something went wrong",
+        "retry": "Retry",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "confirm": "Confirm"
+    },
+    "Navigation": {
+        "home": "Home",
+        "products": "Products",
+        "login": "Login"
+    }
+}

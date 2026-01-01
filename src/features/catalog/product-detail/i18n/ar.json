@@ -1,0 +1,12 @@
+{
+    "ProductDetail": {
+        "title": "تفاصيل المنتج",
+        "price": "السعر",
+        "category": "الفئة",
+        "description": "الوصف",
+        "back": "العودة للمنتجات",
+        "actions": {
+            "edit": "تعديل المنتج"
+        }
+    }
+}

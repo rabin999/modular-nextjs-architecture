@@ -1,0 +1,12 @@
+{
+    "ProductDetail": {
+        "title": "Product Details",
+        "price": "Price",
+        "category": "Category",
+        "description": "Description",
+        "back": "Back to Products",
+        "actions": {
+            "edit": "Edit Product"
+        }
+    }
+}
