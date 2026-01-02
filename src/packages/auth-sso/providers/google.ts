@@ -1,5 +1,16 @@
 
-import { SSOProvider, SSOConfig, SSOPUser } from '../types'
+import type { SSOProvider, SSOConfig, BaseUserData } from '../types'
+
+/**
+ * Google OAuth-specific user data
+ * Extends the base contract with Google-specific fields
+ */
+export interface GoogleUserData extends BaseUserData {
+    picture?: string
+    phone?: string
+    address?: string
+    providerId: string  // Google's sub claim
+}
 
 export class GoogleProvider implements SSOProvider {
     private config: SSOConfig
@@ -44,7 +55,7 @@ export class GoogleProvider implements SSOProvider {
         return `${this.AUTH_URL}?${params.toString()}`
     }
 
-    async getUser(code: string): Promise<SSOPUser> {
+    async getUser(code: string): Promise<GoogleUserData> {
         const tokenParams = new URLSearchParams({
             code,
             client_id: this.config.clientId!,

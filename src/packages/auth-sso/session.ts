@@ -40,11 +40,11 @@ export const SessionManager: ISessionManager = {
         })
     },
 
-    async getSession(): Promise<SessionPayload | null> {
+    async getSession<T extends SessionPayload = SessionPayload>(): Promise<T | null> {
         const cookieStore = await cookies()
         const token = cookieStore.get('session_token')?.value
         if (!token) return null
-        return this.verify(token)
+        return this.verify<T>(token)
     },
 
     async clearSession(): Promise<void> {
@@ -52,8 +52,8 @@ export const SessionManager: ISessionManager = {
         cookieStore.delete('session_token')
     },
 
-    async updateSession(updates: Partial<SessionPayload>): Promise<void> {
-        const currentSession = await this.getSession()
+    async updateSession<T extends SessionPayload = SessionPayload>(updates: Partial<T>): Promise<void> {
+        const currentSession = await this.getSession<T>()
         if (!currentSession) {
             throw new Error('No active session to update')
         }
