@@ -27,7 +27,7 @@ export async function ProductDetailPage({ params }: PageProps) {
         .filter(cap => cap && cap.slot === 'detailActions' && cap.enabled)
         .map((cap, idx) => {
             const Component = cap!.component
-            return <Component key={idx} productId={product.id} />
+            return <Component key={idx} productId={product.id} product={product} />
         })
 
     return (

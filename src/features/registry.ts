@@ -9,12 +9,14 @@ export const REGISTRY = {
         'catalog-product-detail': () => import('./catalog/product-detail/manifest').then(m => m.productDetailManifest),
         'auth-login': () => import('./auth/login/manifest').then(m => m.authManifest),
         'auth-sso': () => import('./auth/sso/manifest').then(m => m.ssoManifest),
+        'cart': () => import('./cart/manifest').then(m => m.cartManifest),
     },
     capabilities: {
         'delete-product': () => import('./catalog/products/capabilities/deleteProduct/manifest').then(m => m.deleteProductCapability),
         'delete-product-detail': () =>
             import('./catalog/products/capabilities/deleteProduct/manifest').then(m => m.deleteProductDetailCapability),
         'edit-product': () => import('./catalog/product-detail/capabilities/editProduct/manifest').then(m => m.editProductCapabilityV1),
+        'add-to-cart': () => import('./catalog/product-detail/capabilities/addToCart/manifest').then(m => m.addToCartCapability),
     },
     config: {
         ui: {
