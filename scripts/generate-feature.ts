@@ -3,7 +3,7 @@
  * Scaffolds new features and capabilities following architectural conventions
  */
 
-import { select, input, search } from '@inquirer/prompts'
+import { select, input, search, confirm } from '@inquirer/prompts'
 import fs from 'fs-extra'
 import path from 'path'
 import chalk from 'chalk'
@@ -18,6 +18,11 @@ const FEATURES_DIR = path.join(ROOT_DIR, 'src/features')
 const REGISTRY_PATH = path.join(FEATURES_DIR, 'registry.ts')
 const CORE_TYPES_PATH = '@/core/types/registry'
 
+/**
+ * Converts a string to kebab-case.
+ * @param str - The input string.
+ * @returns The kebab-cased string.
+ */
 function toKebabCase(str: string): string {
     return (
         str
@@ -27,14 +32,28 @@ function toKebabCase(str: string): string {
     )
 }
 
+/**
+ * Converts a string to PascalCase.
+ * @param str - The input string.
+ * @returns The PascalCased string.
+ */
 function toPascalCase(str: string): string {
     return str.replace(/(^\w|-\w)/g, text => text.replace(/-/, '').toUpperCase())
 }
 
+/**
+ * Converts a string to camelCase.
+ * @param str - The input string.
+ * @returns The camelCased string.
+ */
 function toCamelCase(str: string): string {
     return str.replace(/-\w/g, text => text.replace(/-/, '').toUpperCase())
 }
 
+/**
+ * Retrieves the list of feature directories.
+ * @returns A list of relative feature paths.
+ */
 async function getFeatureDirectories(): Promise<string[]> {
     const manifests = await glob('**/*/manifest.ts', {
         cwd: FEATURES_DIR,
@@ -44,6 +63,10 @@ async function getFeatureDirectories(): Promise<string[]> {
     return dirs.filter(d => !d.includes('capabilities'))
 }
 
+/**
+ * Main entry point for the generator.
+ * Prompts user for the type of artifact to create.
+ */
 async function main() {
     console.log(chalk.bold.blue('🚀 Enterprise Feature Generator'))
     console.log(chalk.dim('Following architectural conventions:\n'))
@@ -67,6 +90,10 @@ async function main() {
     }
 }
 
+/**
+ * Orchestrates the creation of a new feature.
+ * Handles user inputs, directory creation, and manifest generation.
+ */
 async function createFeature() {
     const allDirs = await getFeatureDirectories()
 
@@ -94,6 +121,11 @@ async function createFeature() {
         validate: input => input.trim().length > 0 || 'Name is required',
     })
 
+    const useI18n = await confirm({
+        message: 'Include internationalization support?',
+        default: false,
+    })
+
     const name = toKebabCase(rawName)
     const featurePath = parentPath ? path.join(FEATURES_DIR, parentPath, name) : path.join(FEATURES_DIR, name)
 
@@ -108,10 +140,14 @@ async function createFeature() {
 
     await fs.ensureDir(path.join(featurePath, 'page'))
     await fs.ensureDir(path.join(featurePath, 'contracts'))
-    await fs.ensureDir(path.join(featurePath, 'i18n'))
+
+    if (useI18n) {
+        await fs.ensureDir(path.join(featurePath, 'i18n'))
+    }
 
     const componentName = toPascalCase(name) + 'Page'
-    const pageContent = `'use client'
+    const pageContent = useI18n
+        ? `'use client'
 
 import { useTranslations } from 'next-intl'
 
@@ -126,7 +162,25 @@ export function ${componentName}() {
     )
 }
 `
+        : `'use client'
+
+export function ${componentName}() {
+    return (
+        <div className="container mx-auto px-4 py-8">
+            <h1 className="text-2xl font-bold mb-4">${toPascalCase(name)} Feature</h1>
+            <p className="text-gray-600">This is the ${toPascalCase(name)} feature.</p>
+        </div>
+    )
+}
+`
     await fs.writeFile(path.join(featurePath, 'page', `${componentName}.tsx`), pageContent)
+
+    const messagesConfig = useI18n
+        ? `    messages: {
+        en: () => import('./i18n/en.json'),
+        ar: () => import('./i18n/ar.json'),
+    }`
+        : ''
 
     const manifestContent = `import type { FeatureManifest } from '${CORE_TYPES_PATH}'
 import dynamic from 'next/dynamic'
@@ -139,32 +193,30 @@ export const ${toCamelCase(name)}Manifest: FeatureManifest = {
     enabled: true,
     components: {
         ${componentName},
-    },
-    messages: {
-        en: () => import('./i18n/en.json'),
-        ar: () => import('./i18n/ar.json'),
-    }
+    },${useI18n ? '\n' + messagesConfig : ''}
 }
 `
     await fs.writeFile(path.join(featurePath, 'manifest.ts'), manifestContent)
 
-    const i18nContent = {
-        [toPascalCase(name)]: {
-            title: `${toPascalCase(name)} Feature`,
-            description: `This is the ${toPascalCase(name)} feature.`,
-        },
-    }
-    await fs.writeJson(path.join(featurePath, 'i18n', 'en.json'), i18nContent, { spaces: 4 })
-    await fs.writeJson(
-        path.join(featurePath, 'i18n', 'ar.json'),
-        {
+    if (useI18n) {
+        const i18nContent = {
             [toPascalCase(name)]: {
-                title: 'ميزة',
-                description: 'هذه ميزة',
+                title: `${toPascalCase(name)} Feature`,
+                description: `This is the ${toPascalCase(name)} feature.`,
             },
-        },
-        { spaces: 4 }
-    )
+        }
+        await fs.writeJson(path.join(featurePath, 'i18n', 'en.json'), i18nContent, { spaces: 4 })
+        await fs.writeJson(
+            path.join(featurePath, 'i18n', 'ar.json'),
+            {
+                [toPascalCase(name)]: {
+                    title: 'ميزة',
+                    description: 'هذه ميزة',
+                },
+            },
+            { spaces: 4 }
+        )
+    }
 
     await updateRegistryLazy(name, parentPath, `${toCamelCase(name)}Manifest`, 'features')
 
@@ -175,6 +227,10 @@ export const ${toCamelCase(name)}Manifest: FeatureManifest = {
     console.log(chalk.dim(`  3. Customize your feature component`))
 }
 
+/**
+ * Orchestrates the creation of a new capability.
+ * Scaffolds the component, manifest, and updates registry.
+ */
 async function createCapability() {
     const features = await getFeatureDirectories()
 
@@ -197,6 +253,11 @@ async function createCapability() {
     })
     const name = toKebabCase(rawName)
 
+    const useI18n = await confirm({
+        message: 'Include internationalization support?',
+        default: false,
+    })
+
     const slot = await input({
         message: 'Target Slot (e.g. rowActions, detailActions):',
         default: 'detailActions',
@@ -212,10 +273,13 @@ async function createCapability() {
     console.log(chalk.dim(`\nCreating capability at ${absolutePath}...`))
 
     await fs.ensureDir(path.join(absolutePath, 'ui'))
-    await fs.ensureDir(path.join(absolutePath, 'i18n'))
+    if (useI18n) {
+        await fs.ensureDir(path.join(absolutePath, 'i18n'))
+    }
 
     const componentName = toPascalCase(name)
-    const componentContent = `'use client'
+    const componentContent = useI18n
+        ? `'use client'
 
 import { Button } from '@/shared/ui/Button'
 import { useTranslations } from 'next-intl'
@@ -238,7 +302,33 @@ export function ${componentName}({ productId }: ${componentName}Props) {
     )
 }
 `
+        : `'use client'
+
+import { Button } from '@/shared/ui/Button'
+
+interface ${componentName}Props {
+    productId: number | string
+}
+
+export function ${componentName}({ productId }: ${componentName}Props) {
+    const handleAction = () => {
+        console.log('${componentName} action for product:', productId)
+    }
+
+    return (
+        <Button variant="outline" onClick={handleAction}>
+            ${toPascalCase(name)} Action
+        </Button>
+    )
+}
+`
     await fs.writeFile(path.join(absolutePath, 'ui', `${componentName}.tsx`), componentContent)
+
+    const messagesConfig = useI18n
+        ? `    messages: {
+        en: () => import('./i18n/en.json'),
+    }`
+        : ''
 
     const manifestContent = `import type { CapabilityManifest } from '${CORE_TYPES_PATH}'
 import dynamic from 'next/dynamic'
@@ -250,23 +340,22 @@ export const ${toCamelCase(name)}Capability: CapabilityManifest = {
     description: '${toPascalCase(name)} capability',
     enabled: true,
     slot: '${slot}',
-    component: ${componentName},
-    messages: {
-        en: () => import('./i18n/en.json'),
-    }
+    component: ${componentName},${useI18n ? '\n' + messagesConfig : ''}
 }
 `
     await fs.writeFile(path.join(absolutePath, 'manifest.ts'), manifestContent)
 
-    await fs.writeJson(
-        path.join(absolutePath, 'i18n', 'en.json'),
-        {
-            [`${toPascalCase(name)}Capability`]: {
-                action: `${toPascalCase(name)} Action`,
+    if (useI18n) {
+        await fs.writeJson(
+            path.join(absolutePath, 'i18n', 'en.json'),
+            {
+                [`${toPascalCase(name)}Capability`]: {
+                    action: `${toPascalCase(name)} Action`,
+                },
             },
-        },
-        { spaces: 4 }
-    )
+            { spaces: 4 }
+        )
+    }
 
     await updateRegistryLazy(name, path.join(featurePath, 'capabilities'), `${toCamelCase(name)}Capability`, 'capabilities')
 
@@ -277,7 +366,11 @@ export const ${toCamelCase(name)}Capability: CapabilityManifest = {
 }
 
 /**
- * Adds a lazy-loaded entry to the registry
+ * Adds a lazy-loaded entry to the registry.
+ * @param name - The name of the feature or capability.
+ * @param parentPath - The parent directory path.
+ * @param manifestName - The name of the export in the manifest.
+ * @param type - The type of entry (features or capabilities).
  */
 async function updateRegistryLazy(name: string, parentPath: string, manifestName: string, type: 'features' | 'capabilities') {
     let content = await fs.readFile(REGISTRY_PATH, 'utf-8')

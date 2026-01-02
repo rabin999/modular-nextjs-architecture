@@ -1,0 +1,48 @@
+# Source code (not needed in CLI package)
+src/
+scripts/
+coverage/
+messages/
+
+# Development files
+*.test.ts
+*.test.tsx
+__tests__/
+vitest.config.ts
+vitest.setup.ts
+
+# Config files (template has its own)
+eslint.config.mjs
+knip.json
+next.config.mjs
+next-env.d.ts
+postcss.config.js
+tailwind.config.ts
+tsconfig.json
+.editorconfig
+
+# Build artifacts
+.next/
+node_modules/
+package-lock.json
+
+# Git
+.git/
+.gitignore
+
+# Documentation (keep README.md and LICENSE)
+CLI_SETUP.md
+*.md
+!README.md
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+
+# Test files
+coverage/

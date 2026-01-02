@@ -1,9 +1,20 @@
 {
-  "name": "enterprise-react-architecture",
+  "name": "enterprise-react-boilerplate",
   "version": "1.0.0",
-  "description": "Production-grade Next.js architecture with lazy-loaded registry, security hardening, and feature isolation",
+  "description": "CLI tool to generate production-grade Next.js applications with enterprise architecture",
   "author": "Rabin Bhandari",
   "license": "MIT",
+  "type": "module",
+  "bin": {
+    "enterprise-react-boilerplate": "./bin/cli.js",
+    "create-enterprise-react": "./bin/cli.js"
+  },
+  "files": [
+    "bin",
+    "template",
+    "README.md",
+    "LICENSE"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/rabinbhandari/enterprise-react-architecture"
@@ -16,16 +27,19 @@
     "enterprise",
     "boilerplate",
     "scalable",
-    "security"
+    "security",
+    "cli",
+    "generator"
   ],
   "private": false,
   "scripts": {
+    "prepare:template": "tsx scripts/prepare-template.ts",
     "dev": "next dev",
     "build": "next build",
     "analyze": "cross-env ANALYZE=true next build --webpack",
     "start": "next start",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" \"scripts/**/*.ts\" --max-warnings=0",
-    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" \"scripts/**/*.ts\" --fix",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" \"scripts/**/*.ts\" \"bin/**/*.js\" --max-warnings=0",
+    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" \"scripts/**/*.ts\" \"bin/**/*.js\" --fix",
     "check:inventory": "tsx scripts/inventory.ts",
     "check:orphan": "tsx scripts/check-orphans.ts",
     "check:unused": "knip",
@@ -35,24 +49,27 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    "format": "prettier --write \"src/**/*.{ts,tsx,json}\" \"scripts/**/*.ts\""
+    "format": "prettier --write \"src/**/*.{ts,tsx,json}\" \"scripts/**/*.ts\" \"bin/**/*.js\""
   },
   "dependencies": {
     "@inquirer/prompts": "^8.1.0",
+    "@tailwindcss/postcss": "^4.1.18",
+    "autoprefixer": "^10.4.23",
     "clsx": "^2.1.1",
     "glob": "^13.0.0",
     "isomorphic-dompurify": "^2.35.0",
     "lucide-react": "^0.562.0",
     "next": "^16.1.1",
     "next-intl": "^4.7.0",
+    "postcss": "^8.5.6",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^4.1.18",
     "zod": "^4.3.4"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.1.1",
-    "@tailwindcss/postcss": "^4.1.18",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.1",
     "@testing-library/user-event": "^14.6.1",
@@ -62,7 +79,8 @@
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
     "@vitejs/plugin-react": "^5.1.2",
-    "autoprefixer": "^10.4.20",
+    "@vitest/coverage-v8": "^4.0.16",
+    "@vitest/ui": "^4.0.16",
     "chalk": "^5.6.2",
     "commander": "^14.0.2",
     "cross-env": "^10.1.0",
@@ -74,11 +92,8 @@
     "inquirer": "^13.1.0",
     "jsdom": "^27.4.0",
     "knip": "^5.78.0",
-    "lint-staged": "^16.2.7",
     "msw": "^2.12.7",
-    "postcss": "^8.4.49",
     "prettier": "^3.7.4",
-    "tailwindcss": "^4.1.18",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.16"
