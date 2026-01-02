@@ -34,9 +34,6 @@ indent_style = tab
 indent_size = 2
 end_of_line = lf
 
-[.husky/*]
-end_of_line = lf
-
 [package.json]
 indent_size = 2
 
