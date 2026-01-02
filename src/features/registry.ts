@@ -8,6 +8,7 @@ export const REGISTRY = {
         'catalog-products': () => import('./catalog/products/manifest').then(m => m.catalogManifest),
         'catalog-product-detail': () => import('./catalog/product-detail/manifest').then(m => m.productDetailManifest),
         'auth-login': () => import('./auth/login/manifest').then(m => m.authManifest),
+        'auth-sso': () => import('./auth/sso/manifest').then(m => m.ssoManifest),
     },
     capabilities: {
         'delete-product': () => import('./catalog/products/capabilities/deleteProduct/manifest').then(m => m.deleteProductCapability),
