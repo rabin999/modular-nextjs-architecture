@@ -1,0 +1,16 @@
+{
+    "Catalog": {
+        "title": "Products",
+        "filters": {
+            "all": "All Categories",
+            "placeholder": "Select Category"
+        },
+        "actions": {
+            "delete": "Delete Product"
+        },
+        "card": {
+            "v1_label": "Classic View",
+            "v2_label": "Premium View"
+        }
+    }
+}

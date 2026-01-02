@@ -1,0 +1,15 @@
+{
+    "Common": {
+        "loading": "جاري التحميل...",
+        "error": "حدث خطأ ما",
+        "retry": "أعد المحاولة",
+        "delete": "حذف",
+        "cancel": "إلغاء",
+        "confirm": "تأكيد"
+    },
+    "Navigation": {
+        "home": "الرئيسية",
+        "products": "المنتجات",
+        "login": "دخول"
+    }
+}
